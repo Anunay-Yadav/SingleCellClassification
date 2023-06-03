@@ -1,3 +1,7 @@
 dataset/*
 .idea
 SCC/*
+flowgmm/data/labels/agnews/*
+flowgmm/data/labels/cifar10/*
+flowgmm/data/labels/mnist/*
+flowgmm/data/labels/svhn/*
