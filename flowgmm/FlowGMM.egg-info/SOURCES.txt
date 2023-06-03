@@ -14,6 +14,7 @@ flow_ssl/iresnet.py
 flow_ssl/utils.py
 flow_ssl/conv_parts/__init__.py
 flow_ssl/conv_parts/convenience.py
+flow_ssl/data/SingleCellDataset.py
 flow_ssl/data/__init__.py
 flow_ssl/data/gas.py
 flow_ssl/data/hepmass.py

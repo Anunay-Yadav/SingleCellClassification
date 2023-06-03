@@ -19,15 +19,15 @@ class SingleCellDataset(Dataset,metaclass=Named):
     stratify=True
     def __init__(self,train=True):
         super().__init__()
-        with open('dataset/np/X_train.pkl', 'rb') as fh:
+        with open('../dataset/np/X_train.pkl', 'rb') as fh:
             self.trn = pickle.load(fh)
             # self.trn = self.trn[:, :200]
-        with open('dataset/np/y_train.pkl', 'rb') as fh:
+        with open('../dataset/np/y_train.pkl', 'rb') as fh:
             self.y_trn = pickle.load(fh)
-        with open('dataset/np/X_test.pkl', 'rb') as fh:
+        with open('../dataset/np/X_test.pkl', 'rb') as fh:
             self.tst = pickle.load(fh)
             # self.tst = self.tst[:, :200]
-        with open('dataset/np/y_test.pkl', 'rb') as fh:
+        with open('../dataset/np/y_test.pkl', 'rb') as fh:
             self.y_tst = pickle.load(fh)
 
         self.X = torch.from_numpy(self.trn if train else self.tst).float()
