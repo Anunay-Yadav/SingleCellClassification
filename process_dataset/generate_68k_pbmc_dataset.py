@@ -66,14 +66,14 @@ if __name__ == "__main__":
     y_train_lab = convert_y_to_mapping(y_train, mapping)
     y_train_lab = np.array(y_train_lab)
 
-    with open('dataset/X_train_68k_pbmc_data_80.pkl', 'wb') as fh:
+    with open('dataset/np/X_train.pkl', 'wb') as fh:
         pickle.dump(X_train, fh)
 
-    with open('dataset/X_test_68k_pbmc_data_80.pkl', 'wb') as fh:
+    with open('dataset/np/X_test.pkl', 'wb') as fh:
         pickle.dump(X_test, fh)
     
-    with open('dataset/y_test_68k_pbmc_data_80.pkl', 'wb') as fh:
+    with open('dataset/np/y_test.pkl', 'wb') as fh:
         pickle.dump(y_test_lab, fh)
     
-    with open('dataset/y_train_68k_pbmc_data_80.pkl', 'wb') as fh:
+    with open('dataset/np/y_train.pkl', 'wb') as fh:
         pickle.dump(y_train_lab, fh)
