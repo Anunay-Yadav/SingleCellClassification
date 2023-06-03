@@ -100,9 +100,6 @@ class SemiFlow(Trainer):
                 metrics['class_Acc_' + str(i)] = self.evalAverageMetrics(self.dataloaders['test'], class_wise_acc[i])
             if minibatch:
                 metrics['Unlab_loss(mb)']=self.model.nll(minibatch[1]).mean().cpu().data.numpy()
-        import pickle
-        with open("gdrive/MyDrive/Shared resources/Metrics.pkl", "wb") as f:
-            pickle.dump(metrics, f)
         print(metrics)
         self.logger.add_scalars('metrics',metrics,step)
         super().logStuff(step, minibatch)
