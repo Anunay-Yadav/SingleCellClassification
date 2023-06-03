@@ -12,9 +12,9 @@ if __name__ == "__main__":
     dataset_train = 'dataset/Bh.h5ad'
     dataset_test = 'dataset/smartseq2.h5ad'
     import sys  
-    sys.path.insert(0, 'scripts')
+    sys.path.insert(0, '')
     
-    from utils import * 
+    from scripts.utils import * 
     
     if len(sys.argv) > 1: 
         dataset_train = sys.argv[1]

@@ -13,9 +13,9 @@ import seaborn as sns
 from sklearn import metrics
 if __name__ == "__main__":
     import sys  
-    sys.path.insert(0, 'scripts')
+    sys.path.insert(0, '')
     
-    from utils import * 
+    from scripts.utils import * 
     dataset_train = 'dataset/68kPBMC_processed.h5ad'
     split = 0.80
 

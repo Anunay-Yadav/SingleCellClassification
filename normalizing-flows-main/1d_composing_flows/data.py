@@ -4,9 +4,9 @@ import numpy as np
 
 import sys
  
-sys.path.insert(0, '../../scripts')
+sys.path.insert(0, '')
 
-from utils import train_test_split, preprocess, get_data_mapping, intersection
+from scripts.utils import train_test_split, preprocess, get_data_mapping, intersection
 
 import scanpy as sc
 

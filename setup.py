@@ -11,3 +11,6 @@ setup(name="NFSCC",
       install_requires=['olive-oil-ml @ git+https://github.com/mfinzi/olive-oil-ml'],
       packages=find_packages(),
 )
+
+import sys  
+sys.path.insert(0, '')
