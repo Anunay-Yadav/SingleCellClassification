@@ -13,21 +13,20 @@ import subprocess
 from sklearn.model_selection import train_test_split
 
 class SingleCellDataset(Dataset,metaclass=Named):
-    num_classes = 14
     class_weights=None
     ignored_index=-100
     stratify=True
-    def __init__(self,train=True):
+    def __init__(self,name="abcded", train=True):
         super().__init__()
-        with open('../dataset/np/X_train.pkl', 'rb') as fh:
-            self.trn = pickle.load(fh)
+        with open('../dataset/np/X_train_'+name+'.pkl', 'rb') as fh:
+            self.trn = pickle.load(fh) 
             # self.trn = self.trn[:, :200]
-        with open('../dataset/np/y_train.pkl', 'rb') as fh:
+        with open('../dataset/np/y_train_'+name+'.pkl', 'rb') as fh:
             self.y_trn = pickle.load(fh)
-        with open('../dataset/np/X_test.pkl', 'rb') as fh:
+        with open('../dataset/np/X_test_'+name+'.pkl', 'rb') as fh:
             self.tst = pickle.load(fh)
             # self.tst = self.tst[:, :200]
-        with open('../dataset/np/y_test.pkl', 'rb') as fh:
+        with open('../dataset/np/y_test_'+name+'.pkl', 'rb') as fh:
             self.y_tst = pickle.load(fh)
 
         self.X = torch.from_numpy(self.trn if train else self.tst).float()

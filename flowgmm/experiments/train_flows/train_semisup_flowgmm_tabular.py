@@ -56,9 +56,12 @@ def ResidualTabularWPrior(num_classes,dim_in,coupling_layers,k,means_r=1.,cov_st
 
 @export
 class SemiFlow(Trainer):
-    def __init__(self, *args, unlab_weight=1.,cons_weight=3.,
+    def __init__(self, *args, unlab_weight=1.,cons_weight=3., num_classes = 10, metric_name="batch",
                      **kwargs):
         super().__init__(*args, **kwargs)
+        self.num_classes = num_classes
+        self.metric_name = metric_name
+        print(num_classes, metric_name)
         self.hypers.update({'unlab_weight':unlab_weight,'cons_weight':cons_weight})
         self.dataloaders['train'] = izip(icycle(self.dataloaders['train']),self.dataloaders['_unlab'])
 
@@ -83,7 +86,7 @@ class SemiFlow(Trainer):
         bpd_func = lambda mb: (self.model.nll(mb).mean().cpu().data.numpy()/mb.shape[-1] + np.log(256))/np.log(2)
         acc_func = lambda mb: self.model.prior.classify(self.model(mb[0])).type_as(mb[1]).eq(mb[1]).cpu().data.numpy().mean()
         class_wise_acc = []
-        for i in range(14):
+        for i in range(self.num_classes):
             class_wise_acc.append(lambda mb:  (torch.mul(self.model.prior.classify(self.model(mb[0]))
                                                          .type_as(mb[1]).eq(mb[1]), mb[1].eq(i)).cpu().data.numpy().mean()
                                                / mb[1].eq(i).cpu().data.numpy().mean()))
@@ -96,11 +99,14 @@ class SemiFlow(Trainer):
             metrics['Train_Acc'] = self.evalAverageMetrics(self.dataloaders['Train'],acc_func)
             metrics['val_Acc'] = self.evalAverageMetrics(self.dataloaders['val'],acc_func)
             metrics['test_Acc'] = self.evalAverageMetrics(self.dataloaders['test'],acc_func)
-            for i in range(14):
+            for i in range(self.num_classes):
                 metrics['class_Acc_' + str(i)] = self.evalAverageMetrics(self.dataloaders['test'], class_wise_acc[i])
             if minibatch:
                 metrics['Unlab_loss(mb)']=self.model.nll(minibatch[1]).mean().cpu().data.numpy()
         print(metrics)
+        import pickle
+        with open('/home/anunay18021/SingleCellClassification/tmp/metrics_' + self.metric_name + '.pkl', 'wb') as fh:
+            pickle.dump(metrics, fh)
         self.logger.add_scalars('metrics',metrics,step)
         super().logStuff(step, minibatch)
 

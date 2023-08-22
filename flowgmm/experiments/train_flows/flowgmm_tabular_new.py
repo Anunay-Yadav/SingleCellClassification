@@ -45,18 +45,19 @@ import train_semisup_flowgmm_tabular as flows
 import train_semisup_text_baselines as archs
 import oil.model_trainers as trainers
 
-def makeTrainer(*,dataset=SingleCellDataset,network=SmallNN,num_epochs=15,
+def makeTrainer(*, num_classes = 10, metric_name = "abcd" ,dataset=SingleCellDataset,network=SmallNN,num_epochs=15,
                 bs=5000,lr=1e-3,optim=AdamW,device='cuda',trainer=Classifier,
                 split={'train':20,'val':5000},net_config={},opt_config={'weight_decay':1e-5},
                 trainer_config={'log_dir':os.path.expanduser('~/tb-experiments/UCI/'),'log_args':{'minPeriod':.1, 'timeFrac':3/10}},
                 save=False):
-
+    
     # Prep the datasets splits, model, and dataloaders
     with FixedNumpySeed(0):
-        datasets = split_dataset(dataset(),splits=split)
-        datasets['_unlab'] = dmap(lambda mb: mb[0],dataset())
-        datasets['test'] = dataset(train=False)
+        datasets = split_dataset(SingleCellDataset(name=metric_name, train=True),splits=split)
+        datasets['_unlab'] = dmap(lambda mb: mb[0],dataset(name=metric_name, train=True))
+        datasets['test'] = SingleCellDataset(name=metric_name, train=False)
         #print(datasets['test'][0])
+    datasets['train'].num_classes = num_classes
     device = torch.device(device)
     model = network(num_classes=datasets['train'].num_classes,dim_in=datasets['train'].dim,**net_config).to(device)
 
@@ -65,7 +66,7 @@ def makeTrainer(*,dataset=SingleCellDataset,network=SmallNN,num_epochs=15,
     dataloaders['Train'] = dataloaders['train']
     opt_constr = partial(optim, lr=lr, **opt_config)
     lr_sched = cosLr(num_epochs)#lambda e:1#
-    return trainer(model,dataloaders,opt_constr,lr_sched,**trainer_config)
+    return trainer(model,dataloaders,opt_constr,lr_sched, num_classes= num_classes, metric_name=metric_name,**trainer_config)
 
 tabularTrial = train_trial(makeTrainer)
 

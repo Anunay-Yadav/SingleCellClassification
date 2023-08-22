@@ -5,3 +5,5 @@ flowgmm/data/labels/agnews/*
 flowgmm/data/labels/cifar10/*
 flowgmm/data/labels/mnist/*
 flowgmm/data/labels/svhn/*
+flowgmm/loss_fn_baron.pt
+flowgmm/flow_baron.pt

@@ -1,0 +1,20 @@
+Starting preprocessing...
+Fitting size factors...
+/home/anunay18021/.local/lib/python3.8/site-packages/pydeseq2/dds.py:259: RuntimeWarning: Every gene contains at least one zero, cannot compute log geometric means. Switching to iterative mode.
+  self.fit_size_factors()
+Fitting dispersions...
+... done in 80.82 seconds.
+
+Fitting MAP dispersions...
+... done in 53.41 seconds.
+
+Fitting dispersions...
+... done in 104.73 seconds.
+
+Fitting MAP dispersions...
+... done in 59.79 seconds.
+
+/home/anunay18021/.local/lib/python3.8/site-packages/joblib/externals/loky/backend/resource_tracker.py:310: UserWarning: resource_tracker: There appear to be 6 leaked semlock objects to clean up at shutdown
+  warnings.warn(
+/home/anunay18021/.local/lib/python3.8/site-packages/joblib/externals/loky/backend/resource_tracker.py:310: UserWarning: resource_tracker: There appear to be 9 leaked folder objects to clean up at shutdown
+  warnings.warn(
